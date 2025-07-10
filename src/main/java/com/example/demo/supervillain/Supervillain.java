@@ -18,6 +18,8 @@ public class Supervillain {
 
     private String alias;
 
+    private String villainMail;
+
     private Integer powerLevel;
 
     private Double evilLevel;
@@ -37,9 +39,10 @@ public class Supervillain {
 
     public Supervillain() {}
 
-    public Supervillain(String name, String alias, Integer powerLevel, Double evilLevel, LocalDate firstCrimeDate, List<Power> powers) {
+    public Supervillain(String name, String alias, String villainMail, Integer powerLevel, Double evilLevel, LocalDate firstCrimeDate, List<Power> powers) {
         this.name = name;
         this.alias = alias;
+        this.villainMail = villainMail;
         this.powerLevel = powerLevel;
         this.evilLevel = evilLevel;
         this.firstCrimeDate = firstCrimeDate;
@@ -65,6 +68,14 @@ public class Supervillain {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    public String getVillainMail() {
+        return villainMail;
+    }
+
+    public void setVillainMail(String villainMail) {
+        this.villainMail = villainMail;
     }
 
     public Integer getPowerLevel() {
