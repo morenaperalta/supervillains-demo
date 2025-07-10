@@ -1,5 +1,6 @@
 package com.example.demo.supervillain;
 
+import com.example.demo.power.Power;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -23,14 +24,20 @@ public class Supervillain {
 
     private LocalDate firstCrimeDate;
 
-    private List<String> powers;
+    @ManyToMany
+    @JoinTable(
+            name = "supervillain_powers",
+            joinColumns = @JoinColumn(name = "supervillain_id"),
+            inverseJoinColumns = @JoinColumn(name = "power_id")
+    )
+    private List<Power> powers;
 
     @Enumerated(EnumType.STRING)
     private VillainStatus status;
 
     public Supervillain() {}
 
-    public Supervillain(String name, String alias, Integer powerLevel, Double evilLevel, LocalDate firstCrimeDate, List<String> powers) {
+    public Supervillain(String name, String alias, Integer powerLevel, Double evilLevel, LocalDate firstCrimeDate, List<Power> powers) {
         this.name = name;
         this.alias = alias;
         this.powerLevel = powerLevel;
@@ -84,11 +91,11 @@ public class Supervillain {
         this.firstCrimeDate = firstCrimeDate;
     }
 
-    public List<String> getPowers() {
+    public List<Power> getPowers() {
         return powers;
     }
 
-    public void setPowers(List<String> powers) {
+    public void setPowers(List<Power> powers) {
         this.powers = powers;
     }
 
