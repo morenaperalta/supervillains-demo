@@ -1,6 +1,7 @@
 package com.example.demo.power;
 
-import jakarta.persistence.EntityNotFoundException;
+import com.example.demo.exception.EntityAlreadyExistsException;
+import com.example.demo.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,11 @@ public class PowerService {
                 .orElseThrow(() -> new EntityNotFoundException(Power.class.getSimpleName(), "id", id.toString()));
     }
 
+    public PowerResponse getPowerResponseById(Long id){
+        Power power = getPowerById(id);
+        return PowerMapper.toDto(power);
+    }
+
     public Power getPowerByName(String name) {
         return POWER_REPOSITORY.findPowerByNameIgnoreCase(name)
                 .orElseThrow(() -> new EntityNotFoundException(Power.class.getSimpleName(), "name", name));
@@ -38,12 +44,14 @@ public class PowerService {
     public PowerResponse updatePower(Long id, PowerRequest powerRequest) {
         Power power = getPowerById(id);
         String newName = powerRequest.name().trim();
-        if (!power.getName().equalsIgnoreCase(newName)) {
+        String newDescription = powerRequest.description().trim();
+        if (!power.getName().equalsIgnoreCase(newName) && !newName.isEmpty()) {
             if (POWER_REPOSITORY.existsByNameIgnoreCase(newName)) {
                 throw new EntityAlreadyExistsException(Power.class.getSimpleName(), "name", newName);
             }
         }
         power.setName(newName);
+        power.setDescription(newDescription);
         return PowerMapper.toDto(POWER_REPOSITORY.save(power));
     }
 
