@@ -26,4 +26,66 @@ public class Supervillain {
     @Enumerated(EnumType.STRING)
     private VillainStatus status;
 
+    public Supervillain() {}
+
+    public Supervillain(String name, String alias, Double evilLevel, LocalDate firstCrimeDate, List<String> powers) {
+        this.name = name;
+        this.alias = alias;
+        this.evilLevel = evilLevel;
+        this.firstCrimeDate = firstCrimeDate;
+        this.powers = powers;
+        this.status = VillainStatus.ACTIVE;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public Double getEvilLevel() {
+        return evilLevel;
+    }
+
+    public void setEvilLevel(Double evilLevel) {
+        this.evilLevel = evilLevel;
+    }
+
+    public LocalDate getFirstCrimeDate() {
+        return firstCrimeDate;
+    }
+
+    public void setFirstCrimeDate(LocalDate firstCrimeDate) {
+        this.firstCrimeDate = firstCrimeDate;
+    }
+
+    public List<String> getPowers() {
+        return powers;
+    }
+
+    public void setPowers(List<String> powers) {
+        this.powers = powers;
+    }
+
+    public VillainStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(VillainStatus status) {
+        this.status = status;
+    }
 }
