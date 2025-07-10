@@ -3,7 +3,7 @@ spring:
     ansi:
       enabled: ALWAYS
   application:
-    name: ecommerce-optic
+    name: supervillains-demo
   config:
     import: optional:file:.env[.properties]
 

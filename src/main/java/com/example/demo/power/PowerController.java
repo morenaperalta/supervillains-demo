@@ -34,6 +34,13 @@ public class PowerController {
         return new ResponseEntity<>(powerResponse, HttpStatus.OK);
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<PowerResponse> getPowerByName(@PathVariable String name) {
+        Power power = POWER_SERVICE.getPowerByName(name);
+        PowerResponse powerResponse = PowerMapper.toDto(power);
+        return new ResponseEntity<>(powerResponse, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<PowerResponse> updatePower (@PathVariable Long id, @Valid @RequestBody PowerRequest powerRequest) {
         PowerResponse powerResponse= POWER_SERVICE.updatePower(id, powerRequest);

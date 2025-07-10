@@ -26,7 +26,7 @@ public class Supervillain {
 
     private LocalDate firstCrimeDate;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "supervillain_powers",
             joinColumns = @JoinColumn(name = "supervillain_id"),
@@ -39,7 +39,7 @@ public class Supervillain {
 
     public Supervillain() {}
 
-    public Supervillain(String name, String alias, String villainMail, Integer powerLevel, Double evilLevel, LocalDate firstCrimeDate, List<Power> powers) {
+    public Supervillain(String name, String alias, String villainMail, Integer powerLevel, Double evilLevel, LocalDate firstCrimeDate, List<Power> powers, VillainStatus status) {
         this.name = name;
         this.alias = alias;
         this.villainMail = villainMail;
@@ -47,7 +47,7 @@ public class Supervillain {
         this.evilLevel = evilLevel;
         this.firstCrimeDate = firstCrimeDate;
         this.powers = powers;
-        this.status = VillainStatus.ACTIVE;
+        this.status = status;
     }
 
     public Long getId() {
