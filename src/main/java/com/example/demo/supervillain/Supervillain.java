@@ -1,9 +1,7 @@
 package com.example.demo.supervillain;
 
-import com.example.demo.power.Power;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,11 +13,11 @@ public class Supervillain {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank(message = "Name must not be blank")
     @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
     private String name;
 
-    @NotBlank(message = "Alias is required")
+    @NotBlank(message = "Alias must not be blank")
     @Size(min = 2, max = 100, message = "Alias must be between 2 and 100 characters")
     private String alias;
 
@@ -43,9 +41,9 @@ public class Supervillain {
     @Size(max = 10, message = "Maximum 10 powers allowed")
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "supervillain_powers",
-            joinColumns = @JoinColumn(name = "supervillain_id"),
-            inverseJoinColumns = @JoinColumn(name = "power_id")
+        name = "supervillain_powers",
+        joinColumns = @JoinColumn(name = "supervillain_id"),
+        inverseJoinColumns = @JoinColumn(name = "power_id")
     )
     private List<Power> powers;
 
