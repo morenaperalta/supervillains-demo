@@ -37,17 +37,17 @@ public class SupervillainService {
         return SupervillainMapper.toDto(supervillain);
     }
 
-    private void checkForDuplicateName(String name, Long id) {
-        if (SUPER_VILLAIN_REPOSITORY.existsByNameIgnoreCaseAndIdNot(name, id)) {
-            throw new EntityAlreadyExistsException(Supervillain.class.getSimpleName(), "name", name);
-        }
-    }
+    // private void checkForDuplicateName(String name, Long id) {
+    //     if (SUPER_VILLAIN_REPOSITORY.existsByNameIgnoreCaseAndIdNot(name, id)) {
+    //         throw new EntityAlreadyExistsException(Supervillain.class.getSimpleName(), "name", name);
+    //     }
+    // }
 
-    private void checkForDuplicateAlias(String alias, Long id) {
-        if (SUPER_VILLAIN_REPOSITORY.existsByAliasIgnoreCaseAndIdNot(alias, id)) {
-            throw new EntityAlreadyExistsException(Supervillain.class.getSimpleName(), "alias", alias);
-        }
-    }
+    // private void checkForDuplicateAlias(String alias, Long id) {
+    //     if (SUPER_VILLAIN_REPOSITORY.existsByAliasIgnoreCaseAndIdNot(alias, id)) {
+    //         throw new EntityAlreadyExistsException(Supervillain.class.getSimpleName(), "alias", alias);
+    //     }
+    // }
 
     public Supervillain getSupervillainByName(String name) {
         return SUPER_VILLAIN_REPOSITORY.findSupervillainByNameIgnoreCase(name)
@@ -60,13 +60,13 @@ public class SupervillainService {
     }
 
     public SupervillainResponse saveSupervillain(SupervillainRequest supervillainRequest) {
-        validateRequest(supervillainRequest);
+        // validateRequest(supervillainRequest);
 
-        String name = trimAndValidate(supervillainRequest.name(), "name");
-        String alias = trimAndValidate(supervillainRequest.alias(), "alias");
+        // String name = trimAndValidate(supervillainRequest.name(), "name");
+        // String alias = trimAndValidate(supervillainRequest.alias(), "alias");
 
-        checkForDuplicateName(name);
-        checkForDuplicateAlias(alias);
+        // checkForDuplicateName(name);
+        // checkForDuplicateAlias(alias);
 
         List<Power> powers = resolvePowers(supervillainRequest.powersNames());
         Supervillain supervillain = SupervillainMapper.toEntity(supervillainRequest, powers);
@@ -76,16 +76,20 @@ public class SupervillainService {
 
     public SupervillainResponse updateSupervillain(Long id, SupervillainRequest supervillainRequest) {
         Supervillain supervillain = getSupervillainById(id);
-        String newName = supervillainRequest.name().trim();
-        String newAlias = supervillainRequest.alias().trim();
-        if (!supervillain.getName().equalsIgnoreCase(newName) && !newName.isEmpty()) {
-            checkForDuplicateName(newName, id);
-        }
-        if (!supervillain.getAlias().equalsIgnoreCase(newAlias) && !newAlias.isEmpty()) {
-            checkForDuplicateAlias(newAlias, id);
-        }
-        supervillain.setName(newName);
-        supervillain.setAlias(newAlias);
+
+        // String newName = trimAndValidate(supervillainRequest.name(), "name");
+        // String newAlias = trimAndValidate(supervillainRequest.alias(), "alias");
+
+        // if (!supervillain.getName().equalsIgnoreCase(newName) && !newName.isEmpty()) {
+        //     checkForDuplicateName(newName, id);
+        // }
+        // if (!supervillain.getAlias().equalsIgnoreCase(newAlias) && !newAlias.isEmpty()) {
+        //     checkForDuplicateAlias(newAlias, id);
+        // }
+
+        supervillain.setName(supervillainRequest.name());
+        supervillain.setAlias(supervillainRequest.alias());
+
         return SupervillainMapper.toDto(SUPER_VILLAIN_REPOSITORY.save(supervillain));
     }
 
@@ -94,30 +98,30 @@ public class SupervillainService {
         SUPER_VILLAIN_REPOSITORY.deleteById(id);
     }
 
-    private void validateRequest(SupervillainRequest supervillainRequest) {
-        if (supervillainRequest == null) {
-            throw new IllegalArgumentException("Supervillain request cannot be null");
-        }
-    }
+    // private void validateRequest(SupervillainRequest supervillainRequest) {
+    //     if (supervillainRequest == null) {
+    //         throw new IllegalArgumentException("Supervillain request cannot be null");
+    //     }
+    // }
 
-    private String trimAndValidate(String value, String fieldName) {
-        if (value == null || value.trim().isEmpty()) {
-            throw new IllegalArgumentException(fieldName + " cannot be null or empty");
-        }
-        return value.trim();
-    }
+    // private String trimAndValidate(String value, String fieldName) {
+    //     if (value == null || value.trim().isEmpty()) {
+    //         throw new IllegalArgumentException(fieldName + " cannot be null or empty");
+    //     }
+    //     return value.trim();
+    // }
 
-    private void checkForDuplicateName(String name) {
-        if (SUPER_VILLAIN_REPOSITORY.existsByNameIgnoreCase(name)) {
-            throw new EntityAlreadyExistsException(Supervillain.class.getSimpleName(), "name", name);
-        }
-    }
+    // private void checkForDuplicateName(String name) {
+    //     if (SUPER_VILLAIN_REPOSITORY.existsByNameIgnoreCase(name)) {
+    //         throw new EntityAlreadyExistsException(Supervillain.class.getSimpleName(), "name", name);
+    //     }
+    // }
 
-    private void checkForDuplicateAlias(String alias) {
-        if (SUPER_VILLAIN_REPOSITORY.existsByAliasIgnoreCase(alias)) {
-            throw new EntityAlreadyExistsException(Supervillain.class.getSimpleName(), "alias", alias);
-        }
-    }
+    // private void checkForDuplicateAlias(String alias) {
+    //     if (SUPER_VILLAIN_REPOSITORY.existsByAliasIgnoreCase(alias)) {
+    //         throw new EntityAlreadyExistsException(Supervillain.class.getSimpleName(), "alias", alias);
+    //     }
+    // }
 
     private List<Power> resolvePowers(List<String> names) {
         if (names == null || names.isEmpty()) return List.of();
@@ -129,5 +133,4 @@ public class SupervillainService {
                 .map(POWER_SERVICE::getPowerByName)
                 .toList();
     }
-
 }

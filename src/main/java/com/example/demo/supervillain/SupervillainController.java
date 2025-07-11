@@ -23,7 +23,7 @@ public class SupervillainController {
     }
 
     @PostMapping("")
-    public ResponseEntity<SupervillainResponse> createSupervillain(@Valid @RequestBody SupervillainRequest supervillainRequest) {
+    public ResponseEntity<SupervillainResponse> createSupervillain(@RequestBody SupervillainRequest supervillainRequest) {
         SupervillainResponse supervillainResponse = SUPERVILLAIN_SERVICE.saveSupervillain(supervillainRequest);
         return new ResponseEntity<>(supervillainResponse, HttpStatus.CREATED);
     }
