@@ -3,9 +3,13 @@ package com.example.demo.supervillain;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/supervillain")
@@ -23,7 +27,7 @@ public class SupervillainController {
     }
 
     @PostMapping("")
-    public ResponseEntity<SupervillainResponse> createSupervillain(@RequestBody SupervillainRequest supervillainRequest) {
+    public ResponseEntity<SupervillainResponse> createSupervillain(@Valid @RequestBody SupervillainRequest supervillainRequest) {
         SupervillainResponse supervillainResponse = SUPERVILLAIN_SERVICE.saveSupervillain(supervillainRequest);
         return new ResponseEntity<>(supervillainResponse, HttpStatus.CREATED);
     }
@@ -61,4 +65,17 @@ public class SupervillainController {
         SUPERVILLAIN_SERVICE.deleteSupervillain(id);
         return new ResponseEntity<>("Supervillain deleted successfully", HttpStatus.OK);
     }
+
+//    @ResponseStatus
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException exception) {
+//        Map<String, String> errors = new HashMap<>();
+//
+//        exception.getBindingResult().getAllErrors().forEach((error) -> {
+//            String fieldName = ((FieldError) error).getField();
+//            String errorMessage = error.getDefaultMessage();
+//            errors.put(fieldName, errorMessage);
+//        });
+//        return errors;
+//    }
 }

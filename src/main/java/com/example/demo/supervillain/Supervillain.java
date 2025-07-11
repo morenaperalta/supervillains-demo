@@ -2,6 +2,10 @@ package com.example.demo.supervillain;
 
 import com.example.demo.power.Power;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,10 +18,15 @@ public class Supervillain {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name must not be blank")
+    @Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters")
     private String name;
 
+    @NotBlank(message = "Alias must not be blank")
+    @Size(min = 2, max = 20, message = "Alias must be between 2 and 20 characters")
     private String alias;
 
+    @Email
     private String villainMail;
 
     private Integer powerLevel;
