@@ -36,7 +36,7 @@ src/
 
 ## 🛠️ Tech Stack
 
-- Java 17
+- Java 21
 - Spring Boot 3+
 - Jakarta Bean Validation
 - Maven
@@ -46,7 +46,7 @@ src/
 
 ## 📦 Requirements
 
-- JDK 17+
+- JDK 21+
 - Maven
 
 ---
